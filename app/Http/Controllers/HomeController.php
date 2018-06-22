@@ -23,14 +23,20 @@ class HomeController extends Controller
       $room->tipologia = $request->input('tipologia');
       $room->piano = $request->input('piano');
 
-      if(!is_numeric($room->n_stanza)){
-        $request->session()->flash('error',"Impossibile salvare:numero stanza errato");
-        return view('add');
-      };
-      if(!is_numeric($room->piano)){
-        $request->session()->flash('error',"Impossibile salvare:piano errato");
-        return view('add');
-      };
+      // if(!is_numeric($room->n_stanza)){
+      //   $request->session()->flash('error',"Impossibile salvare:numero stanza errato");
+      //   return view('add');
+      // };
+      // if(!is_numeric($room->piano)){
+      //   $request->session()->flash('error',"Impossibile salvare:piano errato");
+      //   return view('add');
+      // };
+
+      $validateData = $request->validate([
+        'n_stanza' => 'required|integer|',
+        'tipologia' => 'required',
+        'piano' => 'integer'
+      ]);
 
       $result = $room->save();
 
